@@ -151,6 +151,7 @@ export default {
 
 
     ,success(params){
+      this.loading = true
       let loginParams = {...this.loginForm}
       doLogin(loginParams).then(res => {
         if (res.code == 200) {
