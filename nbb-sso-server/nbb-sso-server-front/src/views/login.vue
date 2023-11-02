@@ -36,13 +36,16 @@
         </el-button>
       </el-form-item>
     </el-form>
+
+    <!-- 滑动验证码组件 -->
     <Verify
-        @success="success"
-      :mode="'pop'"
-      :captchaType="'blockPuzzle'"
-      :imgSize="{ width: '330px', height: '155px' }"
-      ref="verify"
-    ></Verify>
+        @success="captchaCheckSuccessCallBack"
+        :mode="'pop'"
+        :captchaType="'clickWord'"
+        :imgSize="{ width: '330px', height: '155px' }"
+        ref="verify"
+    >
+    </Verify>
 
 
     <!--  底部  -->
@@ -98,19 +101,19 @@ export default {
         password: [
           { required: true, trigger: "blur", message: "请输入您的密码" }
         ],
-      },
-
-
+      }
     };
   },
 
   mounted() {
-    this.init()
+    // 校验是否未登录，未登录则加载此页面，已登录则根据url中是否有重定向地址做跳转或者跳转主页
+    this.checkUserLogin()
   },
 
 
   methods: {
-    init() {
+    // 校验是否未登录
+    checkUserLogin() {
       let params = { redirect: this.redirect }
       checkIsLoginAndCreateTicket(params).then(res => {
         // 用户未登录，则停留在当前登录页
@@ -130,33 +133,23 @@ export default {
       })
     },
 
-    // 登录
+    // 点击登录按钮
     handleLogin() {
-      this.$refs.verify.show()
-      // this.loading = true
-      // let params = {...this.loginForm}
-      // doLogin(params).then(res => {
-      //   if (res.code == 200) {
-      //     setToken(res.data)
-      //     // FIXME 登录成功之后是刷新当前页面
-      //     location.reload()
-      //   } else {
-      //     this.$message.warning(res.msg)
-      //   }
-      // }).catch(() => {
-      //   this.loading = false
-      // })
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.$refs.verify.show(); // 弹出滑动验证码
+        }
+      })
+    },
 
-    }
-
-
-    ,success(params){
+    // 滑动验证码验证成功时的回调
+    captchaCheckSuccessCallBack(params){
       this.loading = true
       let loginParams = {...this.loginForm}
       doLogin(loginParams).then(res => {
         if (res.code == 200) {
           setToken(res.data)
-          // FIXME 登录成功之后是刷新当前页面
+          // FIXME 注意：登录成功之后是刷新当前页面
           location.reload()
         } else {
           this.$message.warning(res.msg)
@@ -165,7 +158,6 @@ export default {
         this.loading = false
       })
     },
-
   }
 
 }

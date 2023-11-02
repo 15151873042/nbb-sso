@@ -12,7 +12,6 @@ const service = axios.create({
     timeout: 10000, // 超时
     headers: {
         "Content-Type": "application/json;charset=utf-8",
-        // [tokenName] : getToken() // FIXME 对象的key值使用变量要用此方式[]
     }
 })
 
