@@ -23,11 +23,14 @@ sa-token:
     password: root
     timeout: 10s
 
-#spring:
-#  # redis配置
-#  redis:
-#    database: 14
-#    host: 127.0.0.1
-#    port: 6379
-#    password: root
-#    timeout: 10s
+spring:
+  # redis配置
+  redis:
+    database: 14
+    host: 127.0.0.1
+    port: 6379
+    password: root
+    timeout: 10s
+aj:
+  captcha:
+    cache-type: redis
