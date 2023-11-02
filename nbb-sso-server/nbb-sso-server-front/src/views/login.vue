@@ -145,7 +145,10 @@ export default {
     // 滑动验证码验证成功时的回调
     captchaCheckSuccessCallBack(params){
       this.loading = true
-      let loginParams = {...this.loginForm}
+      let loginParams = {
+        ...this.loginForm, // 用户名密码
+        ...params // 验证码校验值
+      }
       doLogin(loginParams).then(res => {
         if (res.code == 200) {
           setToken(res.data)

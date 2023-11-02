@@ -5,9 +5,11 @@ import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.sso.SaSsoProcessor;
 import cn.dev33.satoken.sso.SaSsoUtil;
-import cn.dev33.satoken.sso.name.ParamName;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.util.SaResult;
+import com.anji.captcha.model.common.ResponseModel;
+import com.anji.captcha.model.vo.CaptchaVO;
+import com.anji.captcha.service.CaptchaService;
 import com.nbb.ssoserver.pojo.LoginDTO;
 import com.nbb.ssoserver.pojo.LoginUser;
 import com.nbb.ssoserver.pojo.UserInfoVO;
@@ -28,6 +30,8 @@ public class SsoServerController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private CaptchaService captchaService;
 
     /**
      * 生成ticket
@@ -66,6 +70,17 @@ public class SsoServerController {
      */
     @RequestMapping("/doLogin")
     public SaResult doLogin(@RequestBody LoginDTO dto) {
+
+        // 再次校验图片验证码 开始
+        // https://gitee.com/anji-plus/captcha/blob/master/service/springboot/README.md
+        CaptchaVO captchaVO = new CaptchaVO();
+        captchaVO.setCaptchaVerification(dto.getCaptchaVerification());
+        ResponseModel captchaCheckResult = captchaService.verification(captchaVO);
+        if (!"0000".equals(captchaCheckResult.getRepCode())) {
+            return SaResult.error("验证码验证失败");
+        }
+        // 再次校验图片验证码 结束
+
 
         // TODO 模拟校验用户名密码
         if (dto.getUsername().equals("hp") && dto.getPassword().equals("hp")) {
