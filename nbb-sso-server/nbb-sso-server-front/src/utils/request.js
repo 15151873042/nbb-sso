@@ -12,14 +12,17 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
 const service = axios.create({
     baseURL: process.env.VUE_APP_BASE_API, // axios中请求配置有baseURL选项，表示请求URL公共部分
-    timeout: 10000, // 超时
-    headers: {
-        [tokenName]: getToken()
-    }
+    timeout: 10000 // 超时
 })
 
 // request拦截器
 service.interceptors.request.use(config => {
+
+    if (getToken()) {
+        config.headers[tokenName] = getToken()
+    }
+
+
     // get请求映射params参数，逐层解析
     if (config.method === 'get' && config.params) {
         let url = config.url + '?' + tansParams(config.params);
