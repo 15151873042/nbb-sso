@@ -24,7 +24,9 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
+
 @RestController
+@RequestMapping("/sso")
 public class SsoServerController {
 
     @Autowired
@@ -42,7 +44,7 @@ public class SsoServerController {
      * <pre>
      * 用户未登录，返回code码402
      * 用户已登录，构建并返回重定向地址
-     * 重定向地址示例：http://sso-client.com?ticket=AxdRG5QyYswCMYboiLgGVz2un8WzIJo0FHxjgNaF3TRkNO8HsxwGopSrYzA72isM
+     * 重定向地址示例：http://sso-client1.com?ticket=AxdRG5QyYswCMYboiLgGVz2un8WzIJo0FHxjgNaF3TRkNO8HsxwGopSrYzA72isM
      * </pre>
      * @param redirect 下发ticket的sso-client端的回调地址
      * @return 携带ticket参数的重定向地址
@@ -71,7 +73,7 @@ public class SsoServerController {
     @RequestMapping("/doLogin")
     public SaResult doLogin(@RequestBody LoginDTO dto) {
 
-        // 再次校验图片验证码 开始
+        // ******************再次校验图片验证码 开始***********************
         // https://gitee.com/anji-plus/captcha/blob/master/service/springboot/README.md
         CaptchaVO captchaVO = new CaptchaVO();
         captchaVO.setCaptchaVerification(dto.getCaptchaVerification());
@@ -79,32 +81,33 @@ public class SsoServerController {
         if (!"0000".equals(captchaCheckResult.getRepCode())) {
             return SaResult.error("验证码验证失败");
         }
-        // 再次校验图片验证码 结束
+        // ******************再次校验图片验证码 结束***********************
 
 
         // TODO 模拟校验用户名密码
-        if (dto.getUsername().equals("hp") && dto.getPassword().equals("hp")) {
-            // 用户登录
-            StpUtil.login("user_id_001");
-
-            // TODO 模拟查询用户信息，用户角色，用户权限，放入session中
-            LoginUser loginUser = new LoginUser();
-            loginUser.setUserId("user_id_001");
-            loginUser.setUserName("张三");
-            loginUser.setPhoneNo("13888888888");
-            loginUser.setSex("男");
-            loginUser.setLoginTime(LocalDateTime.now());
-            List<String> permissions = Arrays.asList("user.add", "user.update");
-            List<String> roles = Arrays.asList("admin");
-            SaSession session = StpUtil.getSession();
-            session.set(SaSession.USER, loginUser);
-            session.set(SaSession.PERMISSION_LIST, permissions);
-            session.set(SaSession.ROLE_LIST, roles);
-
-            return SaResult.ok("登录成功！").setData(StpUtil.getTokenValue());
+        if (!dto.getPassword().equals("hp")) {
+            return SaResult.error("用户名或密码错误");
         }
 
-        return SaResult.error("用户名或密码错误");
+        // 用户登录
+        StpUtil.login("user_id_001");
+
+        // TODO 模拟查询用户信息，用户角色，用户权限，放入session中
+        LoginUser loginUser = new LoginUser();
+        loginUser.setUserId("user_id_001");
+        loginUser.setUserName("张三");
+        loginUser.setPhoneNo("13888888888");
+        loginUser.setSex("男");
+        loginUser.setLoginTime(LocalDateTime.now());
+        List<String> permissions = Arrays.asList("user.add", "user.update");
+        List<String> roles = Arrays.asList("admin");
+        SaSession session = StpUtil.getSession();
+        session.set(SaSession.USER, loginUser);
+        session.set(SaSession.PERMISSION_LIST, permissions);
+        session.set(SaSession.ROLE_LIST, roles);
+
+        return SaResult.ok("登录成功！").setData(StpUtil.getTokenValue());
+
     }
 
 

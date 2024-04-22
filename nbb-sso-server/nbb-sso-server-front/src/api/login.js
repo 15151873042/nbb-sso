@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 校验是否登录，登录则下放ticket
 export function checkIsLoginAndCreateTicket(data) {
   return request({
-    url: '/createTicket',
+    url: '/sso/createTicket',
     method: 'get',
     params: data,
   })
@@ -13,7 +13,7 @@ export function checkIsLoginAndCreateTicket(data) {
 // 登录方法
 export function doLogin(data) {
   return request({
-    url: '/doLogin',
+    url: '/sso/doLogin',
     method: 'post',
     data: data
   })
@@ -22,7 +22,7 @@ export function doLogin(data) {
 // 单点注销
 export function signout(data) {
   return request({
-    url: '/signout',
+    url: '/sso/signout',
     method: 'get',
     params: data,
     timeout: 20000

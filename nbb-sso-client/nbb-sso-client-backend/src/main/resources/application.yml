@@ -8,11 +8,11 @@ sa-token:
         # sso-server端 统一认证地址（前端地址）
         auth-url: http://sso-server.com:9000/login
         # sso-server端 ticket校验地址（后端地址）
-        check-ticket-url: http://127.0.0.1:9100/checkTicket
+        check-ticket-url: http://127.0.0.1:9100/sso/checkTicket
         # sso-server端 查询用户信息地址（后端地址）
-        userinfo-url: http://127.0.0.1:9100/userInfo
+        userinfo-url: http://127.0.0.1:9100/sso/userInfo
         # sso-server端单点注销地址（后端地址）
-        slo-url: http://127.0.0.1:9100/signout
+        slo-url: http://127.0.0.1:9100/sso/signout
         # sso-server单点注销回调本服务的地址
         ssoLogoutCall: http://127.0.0.1:7100/sso/logoutCall
         # 是否打开单点注销接口
