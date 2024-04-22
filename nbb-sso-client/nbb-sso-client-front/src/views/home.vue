@@ -23,6 +23,7 @@ export default {
       loginUrl: '/login?back=' + encodeURIComponent(location.href),
       // 通过调用sso-client-backend登出地址登出
       // FIXME 此处satoken生产环境是不用带的，这边添加是因为启动一个前端sso-client-front项目使用多域名测试
+      // ssoClientBackendLogoutUrl: process.env.VUE_APP_SSO_CLIENT_BACK_END_URL + '/sso/logout?back=' + encodeURIComponent(location.href),
       ssoClientBackendLogoutUrl: process.env.VUE_APP_SSO_CLIENT_BACK_END_URL + '/sso/logout?satoken=' + getToken() + '&back=' + encodeURIComponent(location.href),
       // 通过sso-server-backend登出（引导到sso-server-front注销页面）
       ssoServerBackendLogoutUrl: process.env.VUE_APP_SSO_SERVER_FRONT_SIGNOUT_URL + '?back=' + encodeURIComponent(location.href),

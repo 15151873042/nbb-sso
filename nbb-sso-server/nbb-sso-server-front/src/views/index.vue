@@ -45,7 +45,7 @@ export default {
       this.$router.push({
         path: "/login",
         query: {
-          redirect: 'http://sso-client.com:8000/login?back=http://sso-client.com:8000/home',
+          redirect: 'http://sso-client1.com:8000/login?back=http://sso-client1.com:8000/home',
         }
       })
     },
@@ -53,7 +53,7 @@ export default {
       this.$router.push({
         path: "/login",
         query: {
-          redirect: 'http://sso-client2.com:8000/login?back=http://sso-client2.com:8000/home',
+          redirect: 'http://sso-client2.com:7000/login?back=http://sso-client2.com:7000/home',
         }
       })
     }

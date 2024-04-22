@@ -17,7 +17,7 @@ sa-token:
   is-read-cookie: false
   # 配置 Sa-Token 单独使用的 Redis 连接
   alone-redis:
-    database: 13
+    database: 0
     host: 127.0.0.1
     port: 6379
     password: root
@@ -26,11 +26,13 @@ sa-token:
 spring:
   # redis配置
   redis:
-    database: 14
+    database: 0
     host: 127.0.0.1
     port: 6379
     password: root
     timeout: 10s
+
+# 滑动验证码数据存储在redis
 aj:
   captcha:
     cache-type: redis

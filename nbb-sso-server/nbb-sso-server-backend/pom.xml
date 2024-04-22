@@ -52,6 +52,7 @@
 
         <!-- 验证码滑动验证 -->
         <!-- https://gitee.com/anji-plus/captcha -->
+        <!-- https://ajcaptcha.beliefteam.cn/captcha-doc/captchaDoc/java.html#springboot -->
         <dependency>
             <groupId>com.anji-plus</groupId>
             <artifactId>spring-boot-starter-captcha</artifactId>

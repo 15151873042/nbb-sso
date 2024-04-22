@@ -57,7 +57,7 @@ public class SsoClientController {
         // ssoClientLoginUrl中没有back参数时的默认back参数
         HashMap<String, String> urlParamMap = HttpUtil.decodeParamMap(ssoClientLoginUrl, "UTF-8");
 
-        String defaultBackUrl = "http://sso-client.com:8000/home";
+        String defaultBackUrl = "http://sso-client1.com:8000/home";
         String ssoServerLoginUrl = SaSsoUtil.buildServerAuthUrl(ssoClientLoginUrl, "");
         return SaResult.data(ssoServerLoginUrl);
     }

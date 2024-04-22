@@ -1,5 +1,5 @@
 server:
-    port: 8100
+    port: 7100
 
 # sa-token配置
 sa-token:
@@ -14,7 +14,7 @@ sa-token:
         # sso-server端单点注销地址（后端地址）
         slo-url: http://127.0.0.1:9100/signout
         # sso-server单点注销回调本服务的地址
-        ssoLogoutCall: http://sso-client.com:8100/sso/logoutCall
+        ssoLogoutCall: http://127.0.0.1:7100/sso/logoutCall
         # 是否打开单点注销接口
         is-slo: true
         # 使用 Http 请求校验ticket (模式三)
@@ -28,7 +28,7 @@ sa-token:
 spring:
     # redis配置
     redis:
-        database: 14
+        database: 2
         host: 127.0.0.1
         port: 6379
         password: root
